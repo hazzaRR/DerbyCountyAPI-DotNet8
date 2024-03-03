@@ -1,4 +1,5 @@
-﻿using DerbyCountyAPI.Models;
+﻿using DerbyCountyAPI.Interfaces;
+using DerbyCountyAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace DerbyCountyAPI.Controllers
     {
 
         private readonly DerbycountyContext _context;
+        private readonly IUpcomingFixtureRepository _upcomingFixtureRepository;
 
-        public UpcomingFixtureController(DerbycountyContext context)
+        public UpcomingFixtureController(DerbycountyContext context, IUpcomingFixtureRepository upcomingFixtureRepository)
         {
             _context = context;
+            _upcomingFixtureRepository = upcomingFixtureRepository;
         }
 
         [HttpGet]

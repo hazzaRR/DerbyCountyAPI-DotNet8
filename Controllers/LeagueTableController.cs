@@ -1,4 +1,5 @@
-﻿using DerbyCountyAPI.Models;
+﻿using DerbyCountyAPI.Interfaces;
+using DerbyCountyAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace DerbyCountyAPI.Controllers
     {
 
         private readonly DerbycountyContext _context;
+        private readonly ILeagueTableRespository _leagueTableRespository;
 
-        public LeagueTableController(DerbycountyContext context)
+        public LeagueTableController(DerbycountyContext context, ILeagueTableRespository leagueTableRespository)
         {
             _context = context;
+            _leagueTableRespository = leagueTableRespository;
         }
 
 

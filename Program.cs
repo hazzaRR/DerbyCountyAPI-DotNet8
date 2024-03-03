@@ -1,4 +1,6 @@
+using DerbyCountyAPI.Interfaces;
 using DerbyCountyAPI.Models;
+using DerbyCountyAPI.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -16,6 +18,10 @@ var Configuration = builder.Configuration;
 builder.Services.AddDbContext<DerbycountyContext>(options =>
         options.UseNpgsql(DbConnectionString));
 
+
+builder.Services.AddScoped<ILeagueTableRespository, LeagueTableRepository>();
+builder.Services.AddScoped<IMatchResultRepository, MatchResultRepository>();
+builder.Services.AddScoped<IUpcomingFixtureRepository, UpcomingFixtureRepository>();
 
 var app = builder.Build();
 

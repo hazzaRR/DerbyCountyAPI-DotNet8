@@ -1,6 +1,8 @@
 ﻿using DerbyCountyAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using DerbyCountyAPI.Interfaces;
 
 namespace DerbyCountyAPI.Controllers
 {
@@ -10,18 +12,20 @@ namespace DerbyCountyAPI.Controllers
     {
 
         private readonly DerbycountyContext _context;
+        private readonly IMatchResultRepository _matchResultRepository;
 
 
-        public MatchResultController(DerbycountyContext context)
+        public MatchResultController(DerbycountyContext context, IMatchResultRepository matchResultRepository)
         {
             _context = context;
+            _matchResultRepository = matchResultRepository; 
         }
 
         [HttpGet]
-        public IActionResult GetAllMatches()
+        public async Task<IActionResult> GetAllMatches()
         {
 
-            var matches = _context.MatchResults.ToList();
+            var matches = await _context.MatchResults.ToListAsync();
             return Ok(matches);
 
         }
