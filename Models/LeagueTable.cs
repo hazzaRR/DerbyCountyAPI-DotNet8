@@ -24,4 +24,9 @@ public partial class LeagueTable
     public int? GoalDifference { get; set; }
 
     public int? Points { get; set; }
+
+    public static implicit operator Task<object>(LeagueTable? v)
+    {
+        throw new NotImplementedException();
+    }
 }

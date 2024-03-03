@@ -3,7 +3,7 @@ using DerbyCountyAPI.Interfaces;
 
 namespace DerbyCountyAPI.Repository
 {
-    public class MatchResultService: IMatchResultService
+    public class MatchResultService : IMatchResultService
     {
 
         private readonly DerbycountyContext _context;

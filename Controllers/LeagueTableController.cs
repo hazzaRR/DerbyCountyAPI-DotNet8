@@ -10,23 +10,51 @@ namespace DerbyCountyAPI.Controllers
     public class LeagueTableController : ControllerBase
     {
 
-        private readonly DerbycountyContext _context;
         private readonly ILeagueTableService _leagueTableRespository;
 
-        public LeagueTableController(DerbycountyContext context, ILeagueTableService leagueTableRespository)
+        public LeagueTableController(ILeagueTableService leagueTableRespository)
         {
-            _context = context;
             _leagueTableRespository = leagueTableRespository;
         }
 
 
         [HttpGet]
-        public IActionResult GetLeagueTable()
+        public async Task<IActionResult> GetLeagueTable()
         {
 
-            var leagueTable = _context.LeagueTables.ToList();
-
+            var leagueTable = await _leagueTableRespository.GetLeagueTableAsync();
+            
             return Ok(leagueTable);
+        }
+
+        [HttpGet]
+        [Route("/derby-county")]
+
+        public async Task<IActionResult> GetDerbyPosition()
+        {
+            var derbyPosition = await _leagueTableRespository.GetDerbyPositionAsync();
+
+            if (derbyPosition == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(derbyPosition);
+        }
+
+        [HttpGet]
+        [Route("/league-position/{id}")]
+
+        public async Task<IActionResult> GetLeaguePosition([FromRoute] int id)
+        {
+            var teamInLeaguePosition = await _leagueTableRespository.GetTeamInLeaguePositionAsync(id);
+
+            if (teamInLeaguePosition == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(teamInLeaguePosition);
         }
     }
 }

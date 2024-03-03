@@ -4,7 +4,7 @@ using DerbyCountyAPI.Interfaces;
 namespace DerbyCountyAPI.Repository
 
 {
-    public class UpcomingFixtureService: IUpcomingFixtureService
+    public class UpcomingFixtureService : IUpcomingFixtureService
     {
 
     private readonly DerbycountyContext _context;

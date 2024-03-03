@@ -5,10 +5,10 @@ namespace DerbyCountyAPI.Interfaces
     public interface ILeagueTableService
     {
 
-        List<LeagueTable> GetLeagueTable();
+        Task<List<LeagueTable>> GetLeagueTableAsync();
 
-        LeagueTable GetDerbyPosition();
+        Task<LeagueTable?> GetDerbyPositionAsync();
 
-        LeagueTable GetTeamInLeaguePosition(int position);
+        Task<LeagueTable?> GetTeamInLeaguePositionAsync(int position);
     }
 }

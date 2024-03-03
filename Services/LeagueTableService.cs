@@ -1,9 +1,10 @@
 ﻿using DerbyCountyAPI.Interfaces;
 using DerbyCountyAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DerbyCountyAPI.Repository
 {
-    public class LeagueTableService: ILeagueTableService
+    public class LeagueTableService : ILeagueTableService
     {
 
         private readonly DerbycountyContext _context;
@@ -13,19 +14,20 @@ namespace DerbyCountyAPI.Repository
             _context = context; 
         }
 
-        public LeagueTable GetDerbyPosition()
+        public async Task<LeagueTable?> GetDerbyPositionAsync()
         {
-            throw new NotImplementedException();
+
+            return await _context.LeagueTables.FirstOrDefaultAsync(row => row.Team == "Derby County");
         }
 
-        public List<LeagueTable> GetLeagueTable()
+        public async Task<List<LeagueTable>> GetLeagueTableAsync()
         {
-            throw new NotImplementedException();
+            return await _context.LeagueTables.OrderBy(row => row.LeaguePosition).ToListAsync();
         }
 
-        public LeagueTable GetTeamInLeaguePosition(int position)
+        public async Task<LeagueTable?> GetTeamInLeaguePositionAsync(int position)
         {
-            throw new NotImplementedException();
+            return await _context.LeagueTables.Where(row => row.LeaguePosition == position).FirstOrDefaultAsync();
         }
     }
 }
