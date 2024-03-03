@@ -19,9 +19,9 @@ builder.Services.AddDbContext<DerbycountyContext>(options =>
         options.UseNpgsql(DbConnectionString));
 
 
-builder.Services.AddScoped<ILeagueTableRespository, LeagueTableRepository>();
-builder.Services.AddScoped<IMatchResultRepository, MatchResultRepository>();
-builder.Services.AddScoped<IUpcomingFixtureRepository, UpcomingFixtureRepository>();
+builder.Services.AddScoped<ILeagueTableService, LeagueTableService>();
+builder.Services.AddScoped<IMatchResultService, MatchResultService>();
+builder.Services.AddScoped<IUpcomingFixtureService, UpcomingFixtureService>();
 
 var app = builder.Build();
 

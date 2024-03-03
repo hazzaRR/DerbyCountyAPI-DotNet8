@@ -1,6 +1,14 @@
-﻿namespace DerbyCountyAPI.Interfaces
+﻿using DerbyCountyAPI.Models;
+
+namespace DerbyCountyAPI.Interfaces
 {
-    public interface ILeagueTableRespository
+    public interface ILeagueTableService
     {
+
+        List<LeagueTable> GetLeagueTable();
+
+        LeagueTable GetDerbyPosition();
+
+        LeagueTable GetTeamInLeaguePosition(int position);
     }
 }

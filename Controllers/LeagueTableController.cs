@@ -11,9 +11,9 @@ namespace DerbyCountyAPI.Controllers
     {
 
         private readonly DerbycountyContext _context;
-        private readonly ILeagueTableRespository _leagueTableRespository;
+        private readonly ILeagueTableService _leagueTableRespository;
 
-        public LeagueTableController(DerbycountyContext context, ILeagueTableRespository leagueTableRespository)
+        public LeagueTableController(DerbycountyContext context, ILeagueTableService leagueTableRespository)
         {
             _context = context;
             _leagueTableRespository = leagueTableRespository;

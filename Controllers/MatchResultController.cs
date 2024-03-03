@@ -12,10 +12,10 @@ namespace DerbyCountyAPI.Controllers
     {
 
         private readonly DerbycountyContext _context;
-        private readonly IMatchResultRepository _matchResultRepository;
+        private readonly IMatchResultService _matchResultRepository;
 
 
-        public MatchResultController(DerbycountyContext context, IMatchResultRepository matchResultRepository)
+        public MatchResultController(DerbycountyContext context, IMatchResultService matchResultRepository)
         {
             _context = context;
             _matchResultRepository = matchResultRepository; 
@@ -28,6 +28,20 @@ namespace DerbyCountyAPI.Controllers
             var matches = await _context.MatchResults.ToListAsync();
             return Ok(matches);
 
+        }
+
+        [HttpGet]
+        [Route("/find")]
+        public async Task<IActionResult> GetMatches([FromQuery] string? season,
+            [FromQuery] string? competiton, [FromQuery] string? stadium,
+            [FromQuery] string? team, [FromQuery] string? result) {
+
+            Console.WriteLine(season == null);
+            Console.WriteLine(competiton == null);
+            Console.WriteLine(stadium == null);
+            Console.WriteLine(team == null);
+            Console.WriteLine(result == null);
+            return Ok();
         }
     }
 }

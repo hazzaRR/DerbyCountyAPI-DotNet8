@@ -3,14 +3,29 @@ using DerbyCountyAPI.Models;
 
 namespace DerbyCountyAPI.Repository
 {
-    public class LeagueTableRepository: ILeagueTableRespository
+    public class LeagueTableService: ILeagueTableService
     {
 
         private readonly DerbycountyContext _context;
 
-        public LeagueTableRepository(DerbycountyContext context)
+        public LeagueTableService(DerbycountyContext context)
         {
             _context = context; 
+        }
+
+        public LeagueTable GetDerbyPosition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<LeagueTable> GetLeagueTable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public LeagueTable GetTeamInLeaguePosition(int position)
+        {
+            throw new NotImplementedException();
         }
     }
 }

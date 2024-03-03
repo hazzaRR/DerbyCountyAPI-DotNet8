@@ -11,9 +11,9 @@ namespace DerbyCountyAPI.Controllers
     {
 
         private readonly DerbycountyContext _context;
-        private readonly IUpcomingFixtureRepository _upcomingFixtureRepository;
+        private readonly IUpcomingFixtureService _upcomingFixtureRepository;
 
-        public UpcomingFixtureController(DerbycountyContext context, IUpcomingFixtureRepository upcomingFixtureRepository)
+        public UpcomingFixtureController(DerbycountyContext context, IUpcomingFixtureService upcomingFixtureRepository)
         {
             _context = context;
             _upcomingFixtureRepository = upcomingFixtureRepository;
