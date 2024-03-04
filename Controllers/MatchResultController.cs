@@ -30,8 +30,7 @@ namespace DerbyCountyAPI.Controllers
 
         }
 
-        [HttpGet]
-        [Route("/find")]
+        [HttpGet("find")]
         public async Task<IActionResult> GetMatches([FromQuery] string? season,
             [FromQuery] string? competiton, [FromQuery] string? stadium,
             [FromQuery] string? team, [FromQuery] string? result) {

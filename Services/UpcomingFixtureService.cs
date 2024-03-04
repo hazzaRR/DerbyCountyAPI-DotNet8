@@ -26,39 +26,57 @@ namespace DerbyCountyAPI.Repository
             return await _context.UpcomingFixtures.Select(fixture => fixture.Competition).Distinct().ToListAsync();
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByCompetition(string competition)
+        public async Task<List<UpcomingFixture>> GetFixturesByCompetition(string competition)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+                .Where(fixture => fixture.Competition  == competition)
+                .ToListAsync(); 
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadium(string competiton, string stadium)
+        public async Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadium(string competition, string stadium)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+                .Where(fixture => fixture.Competition == competition && fixture.Stadium == stadium)
+                .ToListAsync();
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadiumAndTeam(string competiton, string stadium, string team)
+        public async Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadiumAndTeam(string competition, string stadium, string team)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+                .Where(fixture => fixture.Competition == competition 
+                && fixture.Stadium == stadium 
+                && (fixture.HomeTeam == team || fixture.AwayTeam == team))
+                .ToListAsync();
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByCompetitionAndTeam(string competiton, string team)
+        public async Task<List<UpcomingFixture>> GetFixturesByCompetitionAndTeam(string competition, string team)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+                .Where(fixture => fixture.Competition == competition
+                && (fixture.HomeTeam == team || fixture.AwayTeam == team))
+                .ToListAsync();
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByStadium(string stadium)
+        public async Task<List<UpcomingFixture>> GetFixturesByStadium(string stadium)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+            .Where(fixture => fixture.Stadium == stadium)
+            .ToListAsync();
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByStadiumAndTeam(string stadium, string team)
+        public async Task<List<UpcomingFixture>> GetFixturesByStadiumAndTeam(string stadium, string team)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+            .Where(fixture => fixture.Stadium == stadium
+            && (fixture.HomeTeam == team || fixture.AwayTeam == team))
+            .ToListAsync();
         }
 
-        public Task<List<UpcomingFixture>> GetFixturesByTeam(string team)
+        public async Task<List<UpcomingFixture>> GetFixturesByTeam(string team)
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+            .Where(fixture => (fixture.HomeTeam == team || fixture.AwayTeam == team))
+            .ToListAsync();
         }
 
         public Task<UpcomingFixture> GetNextFixture()
