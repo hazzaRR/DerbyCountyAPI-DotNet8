@@ -79,9 +79,9 @@ namespace DerbyCountyAPI.Repository
             .ToListAsync();
         }
 
-        public Task<UpcomingFixture> GetNextFixture()
+        public async Task<UpcomingFixture?> GetNextFixture()
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures.OrderBy(fixture => fixture.Kickoff).FirstOrDefaultAsync();
         }
 
         public Task<List<string>> GetTeams()

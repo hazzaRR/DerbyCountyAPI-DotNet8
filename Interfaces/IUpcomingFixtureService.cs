@@ -5,7 +5,7 @@ namespace DerbyCountyAPI.Interfaces
     public interface IUpcomingFixtureService
     {
 
-        Task<UpcomingFixture> GetNextFixture();
+        Task<UpcomingFixture?> GetNextFixture();
         Task<List<UpcomingFixture>> GetAllUpcomingFixtures();
         Task<List<UpcomingFixture>> GetFixturesByTeam(string team);
         Task<List<UpcomingFixture>> GetFixturesByStadium(string stadium);

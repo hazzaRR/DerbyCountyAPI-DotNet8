@@ -77,5 +77,18 @@ namespace DerbyCountyAPI.Controllers
                 return Ok(await _upcomingFixtureRepository.GetAllUpcomingFixtures());
             }
         }
+
+        [HttpGet("next-fixture")]
+        public async Task<IActionResult> GetNextFixture()
+        {
+            var nextFixture = await _upcomingFixtureRepository.GetNextFixture();
+
+            if (nextFixture == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(nextFixture);
+        }
     }
 }
