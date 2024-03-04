@@ -10,21 +10,35 @@ namespace DerbyCountyAPI.Controllers
     public class UpcomingFixtureController : ControllerBase
     {
 
-        private readonly DerbycountyContext _context;
         private readonly IUpcomingFixtureService _upcomingFixtureRepository;
 
-        public UpcomingFixtureController(DerbycountyContext context, IUpcomingFixtureService upcomingFixtureRepository)
+        public UpcomingFixtureController(IUpcomingFixtureService upcomingFixtureRepository)
         {
-            _context = context;
             _upcomingFixtureRepository = upcomingFixtureRepository;
         }
 
         [HttpGet]
-        public IActionResult GetAllFixtures()
+        public async Task<IActionResult> GetAllFixtures()
         {
-            var fixtures = _context.UpcomingFixtures.ToList();
+            var fixtures = await _upcomingFixtureRepository.GetAllUpcomingFixtures();
 
             return Ok(fixtures);
+        }
+
+
+        [HttpGet]
+        [Route("/competitions")]
+
+        public async Task<IActionResult> GetCompetitions()
+        {
+            var competitions = await _upcomingFixtureRepository.GetCompetitions();
+
+            if (competitions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(competitions);
         }
     }
 }
