@@ -90,5 +90,18 @@ namespace DerbyCountyAPI.Controllers
 
             return Ok(nextFixture);
         }
+
+        [HttpGet("teams")]
+        public async Task<IActionResult> GetAllTeams()
+        {
+            var teams = await _upcomingFixtureRepository.GetTeams();
+
+            if (teams == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(teams);
+        }
     }
 }

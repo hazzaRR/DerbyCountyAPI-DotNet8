@@ -1,6 +1,7 @@
 ﻿using DerbyCountyAPI.Models;
 using DerbyCountyAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.InteropServices;
 
 namespace DerbyCountyAPI.Repository
 
@@ -84,9 +85,18 @@ namespace DerbyCountyAPI.Repository
             return await _context.UpcomingFixtures.OrderBy(fixture => fixture.Kickoff).FirstOrDefaultAsync();
         }
 
-        public Task<List<string>> GetTeams()
+        public async Task<List<string?>> GetTeams()
         {
-            throw new NotImplementedException();
+            return await _context.UpcomingFixtures
+            .Where(fixture => fixture.HomeTeam != "Derby County")
+            .Select(fixture => fixture.HomeTeam )
+            .Distinct()
+            .Union(_context.UpcomingFixtures
+                .Where(fixture => fixture.AwayTeam != "Derby County")
+                .Select(fixture => fixture.AwayTeam )
+                .Distinct())
+            .OrderBy(team => team)
+            .ToListAsync();
         }
 
         public Task<List<string>> GetTeamsInCompetition()
