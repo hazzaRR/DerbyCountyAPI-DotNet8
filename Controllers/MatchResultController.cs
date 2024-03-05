@@ -77,23 +77,7 @@ namespace DerbyCountyAPI.Controllers
         [HttpGet("competitions")]
         public async Task<IActionResult> GetCompetitions([FromQuery] string? season, [FromQuery] string? team)
         {
-            List<String> competitions;
-            if (season != null && team != null) 
-            {
-                competitions = await _matchResultRepository.GetCompetitionsPlayedInBySeasonAndTeam(season, team);
-            }
-            else if (season != null)
-            {
-                competitions = await _matchResultRepository.GetCompetitionsPlayedInBySeason(season);
-            }
-            else if (team != null)
-            {
-                competitions = await _matchResultRepository.GetCompetitionsPlayedInByTeam(team);
-            }
-            else
-            {
-                competitions = await _matchResultRepository.GetCompetitionsPlayedIn();
-            }
+            var competitions = await _matchResultRepository.GetCompetitionsPlayedIn(season, team);
 
             return Ok(competitions);
         }

@@ -19,13 +19,7 @@ namespace DerbyCountyAPI.Interfaces
 
         Task<List<string>> GetSeasonsPlayedIn();
 
-        Task<List<string>> GetCompetitionsPlayedIn();
-
-        Task<List<string>> GetCompetitionsPlayedInBySeason(string season);
-
-        Task<List<string>> GetCompetitionsPlayedInByTeam(string team);
-
-        Task<List<string>> GetCompetitionsPlayedInBySeasonAndTeam(string season, string team);
+        Task<List<string?>> GetCompetitionsPlayedIn(string? season, string? team);
 
         Task<List<string>> GetRecord();
 
