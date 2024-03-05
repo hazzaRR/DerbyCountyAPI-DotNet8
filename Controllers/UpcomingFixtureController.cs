@@ -1,8 +1,5 @@
 ﻿using DerbyCountyAPI.Interfaces;
-using DerbyCountyAPI.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DerbyCountyAPI.Controllers
 {

@@ -54,8 +54,6 @@ namespace DerbyCountyAPI.Interfaces
 
         Task<List<string>> GetTeamsPlayedAgainstByCompetition(string competition);
 
-        Task<List<string>> GetTeamsPlayedAgainstBySeasonAndTeam(string season, string team);
-
         Task<List<string>> GetSeasonsPlayedIn();
 
         Task<List<string>> GetCompetitionsPlayedIn();
@@ -64,9 +62,11 @@ namespace DerbyCountyAPI.Interfaces
 
         Task<List<string>> GetCompetitionsPlayedInByTeam(string team);
 
+        Task<List<string>> GetCompetitionsPlayedInBySeasonAndTeam(string season, string team);
 
         Task<List<string>> GetRecord();
-       Task<List<string>> GetRecordbyTeam(string team);
+
+        Task<List<string>> GetRecordbyTeam(string team);
 
     }
 }

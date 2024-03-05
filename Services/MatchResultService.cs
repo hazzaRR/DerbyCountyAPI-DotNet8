@@ -29,6 +29,11 @@ namespace DerbyCountyAPI.Repository
             throw new NotImplementedException();
         }
 
+        public Task<List<string>> GetCompetitionsPlayedInBySeasonAndTeam(string season, string team)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<string>> GetCompetitionsPlayedInByTeam(string team)
         {
             throw new NotImplementedException();
@@ -94,7 +99,7 @@ namespace DerbyCountyAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeamAndResult(string season, string competition, string stadium, string team, string result)
+        public async Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeamAndResult(string season, string competition, string stadium, string team, string result)
         {
             throw new NotImplementedException();
         }
@@ -165,11 +170,6 @@ namespace DerbyCountyAPI.Repository
         }
 
         public Task<List<string>> GetTeamsPlayedAgainstBySeasonAndCompetition(string season, string competition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<string>> GetTeamsPlayedAgainstBySeasonAndTeam(string season, string team)
         {
             throw new NotImplementedException();
         }

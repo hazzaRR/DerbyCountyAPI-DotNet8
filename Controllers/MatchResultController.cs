@@ -1,8 +1,6 @@
-﻿using DerbyCountyAPI.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using DerbyCountyAPI.Interfaces;
+using DerbyCountyAPI.Models;
 
 namespace DerbyCountyAPI.Controllers
 {
@@ -35,19 +33,106 @@ namespace DerbyCountyAPI.Controllers
             var season = await _matchResultRepository.GetCurrentSeason();
             return Ok(season);
 
+        } 
+        
+        
+        
+        [HttpGet("seasons")]
+        public async Task<IActionResult> GetSeasons()
+        {
+
+            var seasons = await _matchResultRepository.GetSeasonsPlayedIn();
+            return Ok(seasons);
+
+        }
+
+        [HttpGet("record")]
+        public async Task<IActionResult> GetRecord([FromQuery] string? team)
+        {
+
+            List<String> record;
+            if (team != null)
+            {
+                record = await _matchResultRepository.GetRecordbyTeam(team);
+            }
+
+            else
+            {
+                record = await _matchResultRepository.GetRecord();
+            }
+
+            return Ok(record);
+
+        }
+
+        [HttpGet("latest-match")]
+        public async Task<IActionResult> GetLatestMatch()
+        {
+
+            var latestMatch = await _matchResultRepository.GetLatestMatchResult();
+
+            return Ok(latestMatch);
+        }
+
+        [HttpGet("competitions")]
+        public async Task<IActionResult> GetCompetitions([FromQuery] string? season, [FromQuery] string? team)
+        {
+            List<String> competitions;
+            if (season != null && team != null) 
+            {
+                competitions = await _matchResultRepository.GetCompetitionsPlayedInBySeasonAndTeam(season, team);
+            }
+            else if (season != null)
+            {
+                competitions = await _matchResultRepository.GetCompetitionsPlayedInBySeason(season);
+            }
+            else if (team != null)
+            {
+                competitions = await _matchResultRepository.GetCompetitionsPlayedInByTeam(team);
+            }
+            else
+            {
+                competitions = await _matchResultRepository.GetCompetitionsPlayedIn();
+            }
+
+            return Ok(competitions);
+        }
+
+        [HttpGet("all-teams-played-against")]
+        public async Task<IActionResult> GetTeamsPlayedAgainst([FromQuery] string? season, [FromQuery] string? competition)
+        {
+            List<String> teams;
+            if (season != null && competition != null)
+            {
+                teams = await _matchResultRepository.GetTeamsPlayedAgainstBySeasonAndCompetition(season, competition);
+            }
+            else if (season != null)
+            {
+                teams = await _matchResultRepository.GetTeamsPlayedAgainstBySeason(season);
+            }
+            else if (competition != null)
+            {
+                teams = await _matchResultRepository.GetTeamsPlayedAgainstByCompetition(competition);
+            }
+            else
+            {
+                teams = await _matchResultRepository.GetTeamsPlayedAgainst();
+            }
+
+            return Ok(teams);
         }
 
         [HttpGet("find")]
         public async Task<IActionResult> GetMatches([FromQuery] string? season,
             [FromQuery] string? competiton, [FromQuery] string? stadium,
-            [FromQuery] string? team, [FromQuery] string? result) {
-
+            [FromQuery] string? team, [FromQuery] string? result) 
+        {
             Console.WriteLine(season == null);
             Console.WriteLine(competiton == null);
             Console.WriteLine(stadium == null);
             Console.WriteLine(team == null);
             Console.WriteLine(result == null);
-            return Ok();
+            return Ok(matches);
         }
     }
 }
