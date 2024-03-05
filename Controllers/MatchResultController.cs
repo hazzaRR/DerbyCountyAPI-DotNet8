@@ -101,23 +101,9 @@ namespace DerbyCountyAPI.Controllers
         [HttpGet("all-teams-played-against")]
         public async Task<IActionResult> GetTeamsPlayedAgainst([FromQuery] string? season, [FromQuery] string? competition)
         {
-            List<String> teams;
-            if (season != null && competition != null)
-            {
-                teams = await _matchResultRepository.GetTeamsPlayedAgainstBySeasonAndCompetition(season, competition);
-            }
-            else if (season != null)
-            {
-                teams = await _matchResultRepository.GetTeamsPlayedAgainstBySeason(season);
-            }
-            else if (competition != null)
-            {
-                teams = await _matchResultRepository.GetTeamsPlayedAgainstByCompetition(competition);
-            }
-            else
-            {
-                teams = await _matchResultRepository.GetTeamsPlayedAgainst();
-            }
+
+
+            var teams = await _matchResultRepository.GetTeamsPlayedAgainst(season, competition);
 
             return Ok(teams);
         }

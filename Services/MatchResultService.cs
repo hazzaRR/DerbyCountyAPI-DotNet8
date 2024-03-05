@@ -99,24 +99,31 @@ namespace DerbyCountyAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<string>> GetTeamsPlayedAgainst()
+        public async Task<List<string?>> GetTeamsPlayedAgainst(string? season, string? competition)
         {
-            throw new NotImplementedException();
-        }
+            var query = _context.MatchResults.AsQueryable();
 
-        public Task<List<string>> GetTeamsPlayedAgainstByCompetition(string competition)
-        {
-            throw new NotImplementedException();
-        }
+            if (season != null )
+            {
+                query = query.Where(match => match.Season == season);  
+            }
+            if (competition != null)
+            {
+                query = query.Where(match => match.Competition == competition);
+            }
 
-        public Task<List<string>> GetTeamsPlayedAgainstBySeason(string season)
-        {
-            throw new NotImplementedException();
-        }
+            var matches = await query
+                .Where(match => match.HomeTeam != "Derby County")
+                .Select(match => match.HomeTeam)
+                .Union(
+                query
+                .Where(match => match.AwayTeam != "Derby County")
+                .Select(match => match.AwayTeam)
+                )
+                .Distinct()
+                .ToListAsync();
 
-        public Task<List<string>> GetTeamsPlayedAgainstBySeasonAndCompetition(string season, string competition)
-        {
-            throw new NotImplementedException();
+            return matches;
         }
 
     }
