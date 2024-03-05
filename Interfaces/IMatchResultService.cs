@@ -1,4 +1,5 @@
-﻿using DerbyCountyAPI.Models;
+﻿using DerbyCountyAPI.dto;
+using DerbyCountyAPI.Models;
 namespace DerbyCountyAPI.Interfaces
 
 {
@@ -21,9 +22,7 @@ namespace DerbyCountyAPI.Interfaces
 
         Task<List<string?>> GetCompetitionsPlayedIn(string? season, string? team);
 
-        Task<List<string>> GetRecord();
-
-        Task<List<string>> GetRecordbyTeam(string team);
+        Task<List<RecordDTO>> GetRecord(string? team);
 
     }
 }

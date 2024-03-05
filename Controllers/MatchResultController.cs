@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DerbyCountyAPI.Interfaces;
-using DerbyCountyAPI.Models;
 
 namespace DerbyCountyAPI.Controllers
 {
@@ -50,16 +49,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetRecord([FromQuery] string? team)
         {
 
-            List<String> record;
-            if (team != null)
-            {
-                record = await _matchResultRepository.GetRecordbyTeam(team);
-            }
-
-            else
-            {
-                record = await _matchResultRepository.GetRecord();
-            }
+            var record = await _matchResultRepository.GetRecord(team);
 
             return Ok(record);
 

@@ -1,6 +1,7 @@
 ﻿using DerbyCountyAPI.Models;
 using DerbyCountyAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using DerbyCountyAPI.dto;
 
 namespace DerbyCountyAPI.Repository
 {
@@ -86,15 +87,16 @@ namespace DerbyCountyAPI.Repository
             return matches;
         }
 
-        public Task<List<string>> GetRecord()
+        public async Task<List<RecordDTO>> GetRecord(string? team)
         {
-            throw new NotImplementedException();
+            return await _context.MatchResults
+                .GroupBy(match => match.Result)
+                .Select(match => new RecordDTO { Result = match.Key, Count = match.Count() })
+                .ToListAsync();
+             
+              
         }
 
-        public Task<List<string>> GetRecordbyTeam(string team)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<List<string>> GetSeasonsPlayedIn()
         {
