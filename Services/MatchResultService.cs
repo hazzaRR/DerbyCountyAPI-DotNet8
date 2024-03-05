@@ -89,12 +89,19 @@ namespace DerbyCountyAPI.Repository
 
         public async Task<List<RecordDTO>> GetRecord(string? team)
         {
-            return await _context.MatchResults
-                .GroupBy(match => match.Result)
-                .Select(match => new RecordDTO { Result = match.Key, Count = match.Count() })
-                .ToListAsync();
-             
-              
+            var query = _context.MatchResults.AsQueryable();
+
+
+            if (team != null)
+            {
+                query = query.Where(match => match.HomeTeam == team || match.AwayTeam == team);
+            }
+
+            return await query
+            .GroupBy(match => match.Result)
+            .Select(match => new RecordDTO { Result = match.Key, Count = match.Count() })
+            .ToListAsync();
+                
         }
 
 
