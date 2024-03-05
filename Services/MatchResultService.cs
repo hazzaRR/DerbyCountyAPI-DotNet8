@@ -54,89 +54,34 @@ namespace DerbyCountyAPI.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<MatchResult>> GetMatchResultsByCompetition(string competition)
+        public async Task<List<MatchResult>> GetMatchResultsByQuery(string? season, string? competition, string? stadium, string? team, string? result)
         {
-            throw new NotImplementedException();
-        }
+            var query = _context.MatchResults.AsQueryable();
 
-        public Task<List<MatchResult>> GetMatchResultsByCompetitionAndStadium(string competition, string stadium)
-        {
-            throw new NotImplementedException();
-        }
+            if (season != null)
+            {
+                query = query.Where(match => match.Season == season);
+            }
+            if (competition != null)
+            {
+                query = query.Where(match => match.Competition == competition);
+            }
+            if (stadium != null)
+            {
+                query = query.Where(match => match.Stadium == stadium);
+            }
+            if (team != null)
+            {
+                query = query.Where(match => match.HomeTeam == team || match.AwayTeam == team);
+            }
+            if (result != null)
+            {
+                query = query.Where(match => match.Result == result);
+            }
 
-        public Task<List<MatchResult>> GetMatchResultsByCompetitionAndStadiumAndTeam(string competition, string stadium, string team)
-        {
-            throw new NotImplementedException();
-        }
+            var matches = await query.ToListAsync();
 
-        public Task<List<MatchResult>> GetMatchResultsByCompetitionAndTeam(string competition, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsByResult(string result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeason(string season)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetition(string season, string competition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadium(string season, string competition, string stadium)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeam(string season, string competition, string stadium, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeamAndResult(string season, string competition, string stadium, string team, string result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndTeam(string season, string competition, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndStadium(string season, string stadium)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsBySeasonAndStadiumAndTeam(string season, string stadium, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> getMatchResultsBySeasonAndTeam(string season, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsByStadium(string stadium)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsByStadiumAndTeam(string stadium, string team)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<MatchResult>> GetMatchResultsByTeam(string team)
-        {
-            throw new NotImplementedException();
+            return matches;
         }
 
         public Task<List<string>> GetRecord()

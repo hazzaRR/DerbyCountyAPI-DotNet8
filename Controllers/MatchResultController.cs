@@ -127,11 +127,9 @@ namespace DerbyCountyAPI.Controllers
             [FromQuery] string? competiton, [FromQuery] string? stadium,
             [FromQuery] string? team, [FromQuery] string? result) 
         {
-            Console.WriteLine(season == null);
-            Console.WriteLine(competiton == null);
-            Console.WriteLine(stadium == null);
-            Console.WriteLine(team == null);
-            Console.WriteLine(result == null);
+
+            var matches = await _matchResultRepository.GetMatchResultsByQuery(season, competiton, stadium, team, result);
+
             return Ok(matches);
         }
     }
