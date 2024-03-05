@@ -11,13 +11,11 @@ namespace DerbyCountyAPI.Controllers
     public class MatchResultController : ControllerBase
     {
 
-        private readonly DerbycountyContext _context;
         private readonly IMatchResultService _matchResultRepository;
 
 
-        public MatchResultController(DerbycountyContext context, IMatchResultService matchResultRepository)
+        public MatchResultController(IMatchResultService matchResultRepository)
         {
-            _context = context;
             _matchResultRepository = matchResultRepository; 
         }
 
@@ -25,8 +23,17 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetAllMatches()
         {
 
-            var matches = await _context.MatchResults.ToListAsync();
+            var matches = await _matchResultRepository.GetAllMatchResults();
             return Ok(matches);
+
+        }
+
+        [HttpGet("current-season")]
+        public async Task<IActionResult> GetCurrentSeason()
+        {
+
+            var season = await _matchResultRepository.GetCurrentSeason();
+            return Ok(season);
 
         }
 

@@ -5,11 +5,11 @@ namespace DerbyCountyAPI.Interfaces
     public interface IMatchResultService
     {
 
-        MatchResult GetMatchResultById();
+        Task<MatchResult> GetMatchResultById();
 
-        MatchResult GetLatestMatchResult();
+        Task<MatchResult> GetLatestMatchResult();
 
-        string GetCurrentSeason();
+        Task<string?> GetCurrentSeason();
 
         Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeamAndResult(String season, String competition, String stadium, String team, String result);
 

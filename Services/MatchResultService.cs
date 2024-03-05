@@ -1,5 +1,6 @@
 ﻿using DerbyCountyAPI.Models;
 using DerbyCountyAPI.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DerbyCountyAPI.Repository
 {
@@ -13,164 +14,165 @@ namespace DerbyCountyAPI.Repository
             _context = context; 
         }
 
-        public List<MatchResult> GetAllMatchResults()
+        public async Task<List<MatchResult>> GetAllMatchResults()
+        {
+            return await _context.MatchResults.ToListAsync();
+        }
+
+        public Task<List<string>> GetCompetitionsPlayedIn()
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetCompetitionsPlayedIn()
+        public Task<List<string>> GetCompetitionsPlayedInBySeason(string season)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetCompetitionsPlayedInBySeason(string season)
+        public Task<List<string>> GetCompetitionsPlayedInByTeam(string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetCompetitionsPlayedInByTeam(string team)
+        public async Task<string?> GetCurrentSeason()
+        {
+            return await _context.MatchResults.Select(match => match.Season).OrderByDescending(season => season).FirstOrDefaultAsync();
+        }
+
+        public Task<MatchResult> GetLatestMatchResult()
         {
             throw new NotImplementedException();
         }
 
-        public string GetCurrentSeason()
+        public Task<MatchResult> GetMatchResultById()
         {
             throw new NotImplementedException();
         }
 
-        public MatchResult GetLatestMatchResult()
+        public Task<List<MatchResult>> GetMatchResultsByCompetition(string competition)
         {
             throw new NotImplementedException();
         }
 
-        public MatchResult GetMatchResultById()
+        public Task<List<MatchResult>> GetMatchResultsByCompetitionAndStadium(string competition, string stadium)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByCompetition(string competition)
+        public Task<List<MatchResult>> GetMatchResultsByCompetitionAndStadiumAndTeam(string competition, string stadium, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByCompetitionAndStadium(string competition, string stadium)
+        public Task<List<MatchResult>> GetMatchResultsByCompetitionAndTeam(string competition, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByCompetitionAndStadiumAndTeam(string competition, string stadium, string team)
+        public Task<List<MatchResult>> GetMatchResultsByResult(string result)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByCompetitionAndTeam(string competition, string team)
+        public Task<List<MatchResult>> GetMatchResultsBySeason(string season)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByResult(string result)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetition(string season, string competition)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeason(string season)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadium(string season, string competition, string stadium)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndCompetition(string season, string competition)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeam(string season, string competition, string stadium, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndCompetitionAndStadium(string season, string competition, string stadium)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeamAndResult(string season, string competition, string stadium, string team, string result)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeam(string season, string competition, string stadium, string team)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndCompetitionAndTeam(string season, string competition, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndCompetitionAndStadiumAndTeamAndResult(string season, string competition, string stadium, string team, string result)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndStadium(string season, string stadium)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndCompetitionAndTeam(string season, string competition, string team)
+        public Task<List<MatchResult>> GetMatchResultsBySeasonAndStadiumAndTeam(string season, string stadium, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndStadium(string season, string stadium)
+        public Task<List<MatchResult>> getMatchResultsBySeasonAndTeam(string season, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsBySeasonAndStadiumAndTeam(string season, string stadium, string team)
+        public Task<List<MatchResult>> GetMatchResultsByStadium(string stadium)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> getMatchResultsBySeasonAndTeam(string season, string team)
+        public Task<List<MatchResult>> GetMatchResultsByStadiumAndTeam(string stadium, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByStadium(string stadium)
+        public Task<List<MatchResult>> GetMatchResultsByTeam(string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByStadiumAndTeam(string stadium, string team)
+        public Task<List<string>> GetRecord()
         {
             throw new NotImplementedException();
         }
 
-        public List<MatchResult> GetMatchResultsByTeam(string team)
+        public Task<List<string>> GetRecordbyTeam(string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetRecord()
+        public Task<List<string>> GetSeasonsPlayedIn()
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetRecordbyTeam(string team)
+        public Task<List<string>> GetTeamsPlayedAgainst()
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetSeasonsPlayedIn()
+        public Task<List<string>> GetTeamsPlayedAgainstByCompetition(string competition)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetTeamsPlayedAgainst()
+        public Task<List<string>> GetTeamsPlayedAgainstBySeason(string season)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetTeamsPlayedAgainstByCompetition(string competition)
+        public Task<List<string>> GetTeamsPlayedAgainstBySeasonAndCompetition(string season, string competition)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetTeamsPlayedAgainstBySeason(string season)
+        public Task<List<string>> GetTeamsPlayedAgainstBySeasonAndTeam(string season, string team)
         {
             throw new NotImplementedException();
         }
 
-        public List<string> GetTeamsPlayedAgainstBySeasonAndCompetition(string season, string competition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<string> GetTeamsPlayedAgainstBySeasonAndTeam(string season, string team)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
