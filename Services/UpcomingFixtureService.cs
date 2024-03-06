@@ -27,57 +27,27 @@ namespace DerbyCountyAPI.Repository
             return await _context.UpcomingFixtures.Select(fixture => fixture.Competition).Distinct().ToListAsync();
         }
 
-        public async Task<List<UpcomingFixture>> GetFixturesByCompetition(string competition)
+        public async Task<List<UpcomingFixture>> GetFixturesByQuery(string ?competition, string? stadium, string? team)
         {
-            return await _context.UpcomingFixtures
-                .Where(fixture => fixture.Competition  == competition)
-                .ToListAsync(); 
-        }
+            var query = _context.UpcomingFixtures.AsQueryable();
 
-        public async Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadium(string competition, string stadium)
-        {
-            return await _context.UpcomingFixtures
-                .Where(fixture => fixture.Competition == competition && fixture.Stadium == stadium)
+            if (competition != null)
+            {
+                query = query.Where(fixture => fixture.Competition == competition);
+            }
+
+            if (stadium != null)
+            {
+                query = query.Where(fixture => fixture.Stadium == stadium);
+            }
+
+            if (team != null)
+            {
+                query = query.Where(fixture => fixture.HomeTeam == team || fixture.AwayTeam == team);
+            }
+
+            return await query
                 .ToListAsync();
-        }
-
-        public async Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadiumAndTeam(string competition, string stadium, string team)
-        {
-            return await _context.UpcomingFixtures
-                .Where(fixture => fixture.Competition == competition 
-                && fixture.Stadium == stadium 
-                && (fixture.HomeTeam == team || fixture.AwayTeam == team))
-                .ToListAsync();
-        }
-
-        public async Task<List<UpcomingFixture>> GetFixturesByCompetitionAndTeam(string competition, string team)
-        {
-            return await _context.UpcomingFixtures
-                .Where(fixture => fixture.Competition == competition
-                && (fixture.HomeTeam == team || fixture.AwayTeam == team))
-                .ToListAsync();
-        }
-
-        public async Task<List<UpcomingFixture>> GetFixturesByStadium(string stadium)
-        {
-            return await _context.UpcomingFixtures
-            .Where(fixture => fixture.Stadium == stadium)
-            .ToListAsync();
-        }
-
-        public async Task<List<UpcomingFixture>> GetFixturesByStadiumAndTeam(string stadium, string team)
-        {
-            return await _context.UpcomingFixtures
-            .Where(fixture => fixture.Stadium == stadium
-            && (fixture.HomeTeam == team || fixture.AwayTeam == team))
-            .ToListAsync();
-        }
-
-        public async Task<List<UpcomingFixture>> GetFixturesByTeam(string team)
-        {
-            return await _context.UpcomingFixtures
-            .Where(fixture => (fixture.HomeTeam == team || fixture.AwayTeam == team))
-            .ToListAsync();
         }
 
         public async Task<UpcomingFixture?> GetNextFixture()

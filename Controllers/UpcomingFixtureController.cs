@@ -41,38 +41,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetFixturesByQuery([FromQuery] string? competition, [FromQuery] string? stadium, [FromQuery] string? team)
         {
 
-            if (competition != null && stadium != null && team != null) 
-            { 
-                return Ok(await _upcomingFixtureRepository.GetFixturesByCompetitionAndStadiumAndTeam(competition, stadium, team));
-            }
-            else if (competition != null && team != null)
-            {
-                return Ok(await _upcomingFixtureRepository.GetFixturesByCompetitionAndTeam(competition, team));
-            }
-            else if (competition != null && stadium != null)
-            {
-                return Ok(await _upcomingFixtureRepository.GetFixturesByCompetitionAndStadium(competition, stadium));
-            }
-            else if (stadium != null && team != null)
-            {
-                return Ok(await _upcomingFixtureRepository.GetFixturesByStadiumAndTeam(stadium, team));
-            }
-            else if (stadium != null)
-            {
-                return Ok(await _upcomingFixtureRepository.GetFixturesByStadium(stadium));
-            }
-            else if (team != null)
-            {
-                return Ok(await _upcomingFixtureRepository.GetFixturesByTeam(team));
-            }
-            else if (competition != null)
-            {
-                return Ok(await _upcomingFixtureRepository.GetFixturesByCompetition(competition));
-            }
-            else
-            {
-                return Ok(await _upcomingFixtureRepository.GetAllUpcomingFixtures());
-            }
+            return Ok(await _upcomingFixtureRepository.GetFixturesByQuery(competition, stadium, team));
         }
 
         [HttpGet("next-fixture")]
