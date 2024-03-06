@@ -25,6 +25,20 @@ namespace DerbyCountyAPI.Controllers
 
         }
 
+        [HttpGet("matchId/{id}")]
+        public async Task<IActionResult> GetMatchById([FromRoute] int id)
+        {
+
+            var match = await _matchResultRepository.GetMatchResultById(id);
+
+            if (match == null)
+            {
+                return NotFound();
+            }
+            return Ok(match);
+
+        }
+
         [HttpGet("current-season")]
         public async Task<IActionResult> GetCurrentSeason()
         {

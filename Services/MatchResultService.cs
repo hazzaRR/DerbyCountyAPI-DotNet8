@@ -52,9 +52,9 @@ namespace DerbyCountyAPI.Repository
             return await _context.MatchResults.OrderByDescending(match => match.Kickoff).FirstOrDefaultAsync();
         }
 
-        public Task<MatchResult> GetMatchResultById()
+        public async Task<MatchResult?> GetMatchResultById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.MatchResults.FirstOrDefaultAsync(match => match.Id == id);
         }
 
         public async Task<List<MatchResult>> GetMatchResultsByQuery(string? season, string? competition, string? stadium, string? team, string? result)

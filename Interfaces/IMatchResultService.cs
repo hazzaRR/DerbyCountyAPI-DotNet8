@@ -6,7 +6,7 @@ namespace DerbyCountyAPI.Interfaces
     public interface IMatchResultService
     {
 
-        Task<MatchResult> GetMatchResultById();
+        Task<MatchResult?> GetMatchResultById(int id);
 
         Task<MatchResult?> GetLatestMatchResult();
 
