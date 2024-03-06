@@ -8,7 +8,7 @@ namespace DerbyCountyAPI.Interfaces
 
         Task<MatchResult> GetMatchResultById();
 
-        Task<MatchResult> GetLatestMatchResult();
+        Task<MatchResult?> GetLatestMatchResult();
 
         Task<string?> GetCurrentSeason();
 

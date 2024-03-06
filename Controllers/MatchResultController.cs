@@ -32,10 +32,9 @@ namespace DerbyCountyAPI.Controllers
             var season = await _matchResultRepository.GetCurrentSeason();
             return Ok(season);
 
-        } 
-        
-        
-        
+        }
+
+
         [HttpGet("seasons")]
         public async Task<IActionResult> GetSeasons()
         {
