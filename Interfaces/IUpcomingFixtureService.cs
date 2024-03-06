@@ -16,7 +16,6 @@ namespace DerbyCountyAPI.Interfaces
         Task<List<UpcomingFixture>> GetFixturesByCompetitionAndStadiumAndTeam(string competition, string stadium, string team);
 
         Task<List<string?>> GetCompetitions();
-        Task<List<string?>> GetTeamsInCompetition(string competition);
-        Task<List<string?>> GetTeams();
+        Task<List<string?>> GetTeams(string? competition);
     }
 }

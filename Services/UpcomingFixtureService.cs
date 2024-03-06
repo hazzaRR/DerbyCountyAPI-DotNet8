@@ -85,32 +85,27 @@ namespace DerbyCountyAPI.Repository
             return await _context.UpcomingFixtures.OrderBy(fixture => fixture.Kickoff).FirstOrDefaultAsync();
         }
 
-        public async Task<List<string?>> GetTeams()
+        public async Task<List<string?>> GetTeams(string? competition)
         {
-            return await _context.UpcomingFixtures
-            .Where(fixture => fixture.HomeTeam != "Derby County")
+            var query = _context.UpcomingFixtures.AsQueryable();
+
+
+            if (competition != null)
+            {
+                query = query.Where(fixture => fixture.Competition == competition);
+            }
+
+
+            return await query.Where(fixture => fixture.HomeTeam != "Derby County")
             .Select(fixture => fixture.HomeTeam )
             .Distinct()
-            .Union(_context.UpcomingFixtures
+            .Union(query
                 .Where(fixture => fixture.AwayTeam != "Derby County")
-                .Select(fixture => fixture.AwayTeam )
-                .Distinct())
-            .OrderBy(team => team)
-            .ToListAsync();
-        }
-
-        public async Task<List<string?>> GetTeamsInCompetition(string competition)
-        {
-            return await _context.UpcomingFixtures
-            .Where(fixture => fixture.HomeTeam != "Derby County" && fixture.Competition == competition) 
-            .Select(fixture => fixture.HomeTeam)
-            .Distinct()
-            .Union(_context.UpcomingFixtures
-                .Where(fixture => fixture.AwayTeam != "Derby County" && fixture.Competition == competition)
                 .Select(fixture => fixture.AwayTeam)
                 .Distinct())
             .OrderBy(team => team)
             .ToListAsync();
         }
+
     }
 }

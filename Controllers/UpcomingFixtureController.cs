@@ -92,18 +92,9 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetAllTeams(string? competition)
 
         {
-
-            List<string?> teams;
-
-            if (competition != null)
-            {
-                teams = await _upcomingFixtureRepository.GetTeamsInCompetition(competition);
-            }
-            else
-            {
-                teams = await _upcomingFixtureRepository.GetTeams();    
-            }
-
+            
+            var teams = await _upcomingFixtureRepository.GetTeams(competition);    
+          
             if (teams == null)
             {
                 return NotFound();
