@@ -105,9 +105,9 @@ namespace DerbyCountyAPI.Repository
         }
 
 
-        public Task<List<string>> GetSeasonsPlayedIn()
+        public async Task<List<string?>> GetSeasonsPlayedIn()
         {
-            throw new NotImplementedException();
+            return await _context.MatchResults.Select(match => match.Season).Distinct().OrderByDescending(match => match).ToListAsync();
         }
 
         public async Task<List<string?>> GetTeamsPlayedAgainst(string? season, string? competition)
