@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DerbyCountyAPI.Interfaces;
+using System.Text;
 
 namespace DerbyCountyAPI.Controllers
 {
@@ -104,6 +105,31 @@ namespace DerbyCountyAPI.Controllers
             var matches = await _matchResultRepository.GetMatchResultsByQuery(season, competiton, stadium, team, result);
 
             return Ok(matches);
+        }
+
+        [HttpGet("matches.csv")]
+        public async Task<IActionResult> GetMatchesAsCsvFile([FromQuery] string? season,
+    [FromQuery] string? competiton, [FromQuery] string? stadium,
+    [FromQuery] string? team, [FromQuery] string? result)
+        {
+
+            var matches = await _matchResultRepository.GetMatchResultsByQuery(season, competiton, stadium, team, result);
+
+            // Create a CSV string
+            var csvBuilder = new StringBuilder();
+            csvBuilder.AppendLine("MatchId,HomeTeam,AwayTeam,Kickoff,HomeScore,AwayScore,Result,PenaltiesScore,Season,Competition,Stadium");
+
+            foreach (var match in matches)
+            {
+                csvBuilder.AppendLine($"{match.Id},{match.HomeTeam},{match.AwayTeam},{match.Kickoff},{match.HomeScore},{match.AwayScore},{match.Result},{match.PenaltiesScore},{match.Season},{match.Competition},{match.Stadium}");
+            }
+
+            // Convert the CSV string to a byte array
+            byte[] csvBytes = Encoding.UTF8.GetBytes(csvBuilder.ToString());
+
+            // Return the CSV file as a response
+            return File(csvBytes, "text/csv", "matches.csv");
+
         }
     }
 }
