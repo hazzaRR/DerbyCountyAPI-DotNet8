@@ -8,17 +8,17 @@ namespace DerbyCountyAPI.Controllers
     public class UpcomingFixtureController : ControllerBase
     {
 
-        private readonly IUpcomingFixtureService _upcomingFixtureRepository;
+        private readonly IUpcomingFixtureService _upcomingFixtureService;
 
-        public UpcomingFixtureController(IUpcomingFixtureService upcomingFixtureRepository)
+        public UpcomingFixtureController(IUpcomingFixtureService upcomingFixtureService)
         {
-            _upcomingFixtureRepository = upcomingFixtureRepository;
+            _upcomingFixtureService = upcomingFixtureService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllFixtures()
         {
-            var fixtures = await _upcomingFixtureRepository.GetAllUpcomingFixtures();
+            var fixtures = await _upcomingFixtureService.GetAllUpcomingFixtures();
 
             return Ok(fixtures);
         }
@@ -27,7 +27,7 @@ namespace DerbyCountyAPI.Controllers
         [HttpGet("competitions")]
         public async Task<IActionResult> GetCompetitions()
         {
-            var competitions = await _upcomingFixtureRepository.GetCompetitions();
+            var competitions = await _upcomingFixtureService.GetCompetitions();
 
             if (competitions == null)
             {
@@ -41,13 +41,13 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetFixturesByQuery([FromQuery] string? competition, [FromQuery] string? stadium, [FromQuery] string? team)
         {
 
-            return Ok(await _upcomingFixtureRepository.GetFixturesByQuery(competition, stadium, team));
+            return Ok(await _upcomingFixtureService.GetFixturesByQuery(competition, stadium, team));
         }
 
         [HttpGet("next-fixture")]
         public async Task<IActionResult> GetNextFixture()
         {
-            var nextFixture = await _upcomingFixtureRepository.GetNextFixture();
+            var nextFixture = await _upcomingFixtureService.GetNextFixture();
 
             if (nextFixture == null)
             {
@@ -62,7 +62,7 @@ namespace DerbyCountyAPI.Controllers
 
         {
             
-            var teams = await _upcomingFixtureRepository.GetTeams(competition);    
+            var teams = await _upcomingFixtureService.GetTeams(competition);    
           
             if (teams == null)
             {

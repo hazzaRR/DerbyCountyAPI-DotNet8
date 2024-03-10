@@ -8,11 +8,11 @@ namespace DerbyCountyAPI.Controllers
     public class LeagueTableController : ControllerBase
     {
 
-        private readonly ILeagueTableService _leagueTableRespository;
+        private readonly ILeagueTableService _leagueTableService;
 
-        public LeagueTableController(ILeagueTableService leagueTableRespository)
+        public LeagueTableController(ILeagueTableService leagueTableService)
         {
-            _leagueTableRespository = leagueTableRespository;
+            _leagueTableService = leagueTableService;
         }
 
 
@@ -20,7 +20,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetLeagueTable()
         {
 
-            var leagueTable = await _leagueTableRespository.GetLeagueTableAsync();
+            var leagueTable = await _leagueTableService.GetLeagueTableAsync();
             
             return Ok(leagueTable);
         }
@@ -30,7 +30,7 @@ namespace DerbyCountyAPI.Controllers
 
         public async Task<IActionResult> GetDerbyPosition()
         {
-            var derbyPosition = await _leagueTableRespository.GetDerbyPositionAsync();
+            var derbyPosition = await _leagueTableService.GetDerbyPositionAsync();
 
             if (derbyPosition == null)
             {
@@ -45,7 +45,7 @@ namespace DerbyCountyAPI.Controllers
 
         public async Task<IActionResult> GetLeaguePosition([FromRoute] int id)
         {
-            var teamInLeaguePosition = await _leagueTableRespository.GetTeamInLeaguePositionAsync(id);
+            var teamInLeaguePosition = await _leagueTableService.GetTeamInLeaguePositionAsync(id);
 
             if (teamInLeaguePosition == null)
             {

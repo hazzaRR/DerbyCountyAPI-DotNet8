@@ -9,19 +9,19 @@ namespace DerbyCountyAPI.Controllers
     public class MatchResultController : ControllerBase
     {
 
-        private readonly IMatchResultService _matchResultRepository;
+        private readonly IMatchResultService _matchResultService;
 
 
-        public MatchResultController(IMatchResultService matchResultRepository)
+        public MatchResultController(IMatchResultService matchResultService)
         {
-            _matchResultRepository = matchResultRepository; 
+            _matchResultService = matchResultService; 
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllMatches()
         {
 
-            var matches = await _matchResultRepository.GetAllMatchResults();
+            var matches = await _matchResultService.GetAllMatchResults();
             return Ok(matches);
 
         }
@@ -30,7 +30,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetMatchById([FromRoute] int id)
         {
 
-            var match = await _matchResultRepository.GetMatchResultById(id);
+            var match = await _matchResultService.GetMatchResultById(id);
 
             if (match == null)
             {
@@ -44,7 +44,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetCurrentSeason()
         {
 
-            var season = await _matchResultRepository.GetCurrentSeason();
+            var season = await _matchResultService.GetCurrentSeason();
             return Ok(season);
 
         }
@@ -54,7 +54,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetSeasons()
         {
 
-            var seasons = await _matchResultRepository.GetSeasonsPlayedIn();
+            var seasons = await _matchResultService.GetSeasonsPlayedIn();
             return Ok(seasons);
 
         }
@@ -63,7 +63,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetRecord([FromQuery] string? team)
         {
 
-            var record = await _matchResultRepository.GetRecord(team);
+            var record = await _matchResultService.GetRecord(team);
 
             return Ok(record);
 
@@ -73,7 +73,7 @@ namespace DerbyCountyAPI.Controllers
         public async Task<IActionResult> GetLatestMatch()
         {
 
-            var latestMatch = await _matchResultRepository.GetLatestMatchResult();
+            var latestMatch = await _matchResultService.GetLatestMatchResult();
 
             return Ok(latestMatch);
         }
@@ -81,7 +81,7 @@ namespace DerbyCountyAPI.Controllers
         [HttpGet("competitions")]
         public async Task<IActionResult> GetCompetitions([FromQuery] string? season, [FromQuery] string? team)
         {
-            var competitions = await _matchResultRepository.GetCompetitionsPlayedIn(season, team);
+            var competitions = await _matchResultService.GetCompetitionsPlayedIn(season, team);
 
             return Ok(competitions);
         }
@@ -91,7 +91,7 @@ namespace DerbyCountyAPI.Controllers
         {
 
 
-            var teams = await _matchResultRepository.GetTeamsPlayedAgainst(season, competition);
+            var teams = await _matchResultService.GetTeamsPlayedAgainst(season, competition);
 
             return Ok(teams);
         }
@@ -102,7 +102,7 @@ namespace DerbyCountyAPI.Controllers
             [FromQuery] string? team, [FromQuery] string? result) 
         {
 
-            var matches = await _matchResultRepository.GetMatchResultsByQuery(season, competiton, stadium, team, result);
+            var matches = await _matchResultService.GetMatchResultsByQuery(season, competiton, stadium, team, result);
 
             return Ok(matches);
         }
@@ -113,9 +113,8 @@ namespace DerbyCountyAPI.Controllers
     [FromQuery] string? team, [FromQuery] string? result)
         {
 
-            var matches = await _matchResultRepository.GetMatchResultsByQuery(season, competiton, stadium, team, result);
+            var matches = await _matchResultService.GetMatchResultsByQuery(season, competiton, stadium, team, result);
 
-            // Create a CSV string
             var csvBuilder = new StringBuilder();
             csvBuilder.AppendLine("MatchId,HomeTeam,AwayTeam,Kickoff,HomeScore,AwayScore,Result,PenaltiesScore,Season,Competition,Stadium");
 
@@ -124,10 +123,8 @@ namespace DerbyCountyAPI.Controllers
                 csvBuilder.AppendLine($"{match.Id},{match.HomeTeam},{match.AwayTeam},{match.Kickoff},{match.HomeScore},{match.AwayScore},{match.Result},{match.PenaltiesScore},{match.Season},{match.Competition},{match.Stadium}");
             }
 
-            // Convert the CSV string to a byte array
             byte[] csvBytes = Encoding.UTF8.GetBytes(csvBuilder.ToString());
 
-            // Return the CSV file as a response
             return File(csvBytes, "text/csv", "matches.csv");
 
         }

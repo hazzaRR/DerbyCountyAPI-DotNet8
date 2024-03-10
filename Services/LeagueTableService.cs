@@ -2,7 +2,7 @@
 using DerbyCountyAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DerbyCountyAPI.Repository
+namespace DerbyCountyAPI.Service
 {
     public class LeagueTableService : ILeagueTableService
     {

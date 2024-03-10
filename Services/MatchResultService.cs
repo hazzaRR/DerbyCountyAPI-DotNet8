@@ -3,7 +3,7 @@ using DerbyCountyAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using DerbyCountyAPI.dto;
 
-namespace DerbyCountyAPI.Repository
+namespace DerbyCountyAPI.Service
 {
     public class MatchResultService : IMatchResultService
     {

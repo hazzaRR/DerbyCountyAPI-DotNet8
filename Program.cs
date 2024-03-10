@@ -1,6 +1,6 @@
 using DerbyCountyAPI.Interfaces;
 using DerbyCountyAPI.Models;
-using DerbyCountyAPI.Repository;
+using DerbyCountyAPI.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
 
