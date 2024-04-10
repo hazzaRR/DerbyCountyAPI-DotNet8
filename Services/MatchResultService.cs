@@ -87,6 +87,39 @@ namespace DerbyCountyAPI.Service
             return matches;
         }
 
+        public async Task<List<MatchResult>> GetMatchResultsByQueryWithPagination(int pageNumber, int pageSize, string? season, string? competition, string? stadium, string? team, string? result)
+        {
+            var query = _context.MatchResults.OrderBy(match => match.Kickoff).AsQueryable();
+
+            if (season != null)
+            {
+                query = query.Where(match => match.Season == season);
+            }
+            if (competition != null)
+            {
+                query = query.Where(match => match.Competition == competition);
+            }
+            if (stadium != null)
+            {
+                query = query.Where(match => match.Stadium == stadium);
+            }
+            if (team != null)
+            {
+                query = query.Where(match => match.HomeTeam == team || match.AwayTeam == team);
+            }
+            if (result != null)
+            {
+                query = query.Where(match => match.Result == result);
+            }
+
+            var matches = await query
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return matches;
+        }
+
         public async Task<List<RecordDTO>> GetRecord(string? team)
         {
             var query = _context.MatchResults.AsQueryable();

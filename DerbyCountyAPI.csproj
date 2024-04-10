@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DerbyCountyAPI.Test\**" />
+    <Content Remove="DerbyCountyAPI.Test\**" />
+    <EmbeddedResource Remove="DerbyCountyAPI.Test\**" />
+    <None Remove="DerbyCountyAPI.Test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
