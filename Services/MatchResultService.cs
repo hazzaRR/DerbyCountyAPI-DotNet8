@@ -162,7 +162,7 @@ namespace DerbyCountyAPI.Services
                 query = query.Where(match => match.Competition == competition);
             }
 
-            var matches = await query
+            var teams = await query
                 .Where(match => match.HomeTeam != "Derby County")
                 .Select(match => match.HomeTeam)
                 .Union(
@@ -171,9 +171,10 @@ namespace DerbyCountyAPI.Services
                 .Select(match => match.AwayTeam)
                 )
                 .Distinct()
+                .OrderBy(match => match)
                 .ToListAsync();
 
-            return matches;
+            return teams;
         }
 
     }
