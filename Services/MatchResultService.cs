@@ -3,7 +3,7 @@ using DerbyCountyAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using DerbyCountyAPI.Dto;
 
-namespace DerbyCountyAPI.Service
+namespace DerbyCountyAPI.Services
 {
     public class MatchResultService : IMatchResultService
     {
@@ -12,7 +12,7 @@ namespace DerbyCountyAPI.Service
 
         public MatchResultService(DerbycountyContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
         public async Task<List<MatchResult>> GetAllMatchResults()
@@ -59,7 +59,7 @@ namespace DerbyCountyAPI.Service
 
         public async Task<List<MatchResult>> GetMatchResultsByQuery(string? season, string? competition, string? stadium, string? team, string? result)
         {
-            var query = _context.MatchResults.AsQueryable();
+            var query = _context.MatchResults.OrderByDescending(match => match.Kickoff).AsQueryable();
 
             if (season != null)
             {
@@ -140,7 +140,7 @@ namespace DerbyCountyAPI.Service
             .GroupBy(match => match.Result)
             .Select(match => new RecordDTO { Result = match.Key, Count = match.Count() })
             .ToListAsync();
-                
+
         }
 
 
@@ -153,9 +153,9 @@ namespace DerbyCountyAPI.Service
         {
             var query = _context.MatchResults.AsQueryable();
 
-            if (season != null )
+            if (season != null)
             {
-                query = query.Where(match => match.Season == season);  
+                query = query.Where(match => match.Season == season);
             }
             if (competition != null)
             {
