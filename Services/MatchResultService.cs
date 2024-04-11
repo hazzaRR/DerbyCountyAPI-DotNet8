@@ -1,7 +1,7 @@
 ﻿using DerbyCountyAPI.Models;
 using DerbyCountyAPI.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using DerbyCountyAPI.dto;
+using DerbyCountyAPI.Dto;
 
 namespace DerbyCountyAPI.Service
 {
@@ -89,7 +89,7 @@ namespace DerbyCountyAPI.Service
 
         public async Task<List<MatchResult>> GetMatchResultsByQueryWithPagination(int pageNumber, int pageSize, string? season, string? competition, string? stadium, string? team, string? result)
         {
-            var query = _context.MatchResults.OrderBy(match => match.Kickoff).AsQueryable();
+            var query = _context.MatchResults.OrderByDescending(match => match.Kickoff).AsQueryable();
 
             if (season != null)
             {

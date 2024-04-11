@@ -1,4 +1,4 @@
-﻿using DerbyCountyAPI.dto;
+﻿using DerbyCountyAPI.Dto;
 using DerbyCountyAPI.Models;
 namespace DerbyCountyAPI.Interfaces
 

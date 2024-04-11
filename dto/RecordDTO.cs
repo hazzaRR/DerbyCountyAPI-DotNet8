@@ -1,4 +1,4 @@
-﻿namespace DerbyCountyAPI.dto
+﻿namespace DerbyCountyAPI.Dto
 {
     public class RecordDTO
     {

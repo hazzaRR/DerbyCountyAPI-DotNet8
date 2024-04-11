@@ -107,6 +107,22 @@ namespace DerbyCountyAPI.Controllers
             return Ok(matches);
         }
 
+        [HttpGet("find-page/{pageNumber}/size/{pageSize}")]
+        public async Task<IActionResult> GetMatchesByPage([FromRoute] int pageNumber, [FromRoute] int pageSize, [FromQuery] string? season,
+        [FromQuery] string? competiton, [FromQuery] string? stadium,
+        [FromQuery] string? team, [FromQuery] string? result)
+        {
+
+            if (pageNumber < 1 || pageSize < 1)
+            {
+                return BadRequest("Page number and size must atleast 1 or greater");
+            }
+
+            var matches = await _matchResultService.GetMatchResultsByQueryWithPagination(pageNumber, pageSize, season, competiton, stadium, team, result);
+
+            return Ok(matches);
+        }
+
         [HttpGet("matches.csv")]
         public async Task<IActionResult> GetMatchesAsCsvFile([FromQuery] string? season,
     [FromQuery] string? competiton, [FromQuery] string? stadium,
