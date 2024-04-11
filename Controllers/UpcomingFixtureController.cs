@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DerbyCountyAPI.Controllers
 {
-    [Route("api/fixture")]
+    [Route("api/fixtures")]
     [ApiController]
     public class UpcomingFixtureController : ControllerBase
     {

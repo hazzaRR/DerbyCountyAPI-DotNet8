@@ -45,7 +45,7 @@ namespace DerbyCountyAPI.Controllers
         {
 
             var season = await _matchResultService.GetCurrentSeason();
-            return Ok(season);
+            return Ok(new Dto.StringDTO(season));
 
         }
 
@@ -107,7 +107,7 @@ namespace DerbyCountyAPI.Controllers
             return Ok(matches);
         }
 
-        [HttpGet("find-page/{pageNumber}/size/{pageSize}")]
+        [HttpGet("find/page/{pageNumber}/size/{pageSize}")]
         public async Task<IActionResult> GetMatchesByPage([FromRoute] int pageNumber, [FromRoute] int pageSize, [FromQuery] string? season,
         [FromQuery] string? competiton, [FromQuery] string? stadium,
         [FromQuery] string? team, [FromQuery] string? result)
