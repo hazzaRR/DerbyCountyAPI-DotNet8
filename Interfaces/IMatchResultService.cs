@@ -16,7 +16,7 @@ namespace DerbyCountyAPI.Interfaces
 
         Task<List<MatchResult>> GetMatchResultsByQuery(string? season, string? competition, string? stadium, string? team, string? result);
 
-        Task<List<MatchResult>> GetMatchResultsByQueryWithPagination(int pageNumber, int pageSize, string? season, string? competition, string? stadium, string? team, string? result);
+        Task<PagedResponseDTO<MatchResult>> GetMatchResultsByQueryWithPagination(int pageNumber, int pageSize, string? season, string? competition, string? stadium, string? team, string? result);
 
         Task<List<string?>> GetTeamsPlayedAgainst(string? season, string? competition);
 
