@@ -196,5 +196,55 @@ namespace DerbyCountyAPI.Tests
 
         }
 
+
+        [Fact]
+        public async void GetRecord_ReturnsOkAndRecordDTO()
+        {
+
+            //Arrange
+
+            List<RecordDTO> record = new List<RecordDTO>
+            {
+                new RecordDTO()
+                {
+                    Count = 1,
+                    Result = "W"
+                },
+                new RecordDTO()
+                {
+                    Count = 3,
+                    Result = "D",
+
+                },
+                new RecordDTO()
+                {
+                    Count = 0,
+                    Result = "L"
+                }
+
+            };
+
+
+            _matchResultService.Setup(service => service.GetRecord("Nottingham Forest"))
+                .ReturnsAsync(record);
+
+
+            //Act
+
+            var result = await _controller.GetRecord("Nottingham Forest");
+
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(record, okResult.Value);
+
+        }
+
     }
 }
