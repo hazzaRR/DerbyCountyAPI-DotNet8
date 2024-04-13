@@ -1,4 +1,5 @@
 ﻿using DerbyCountyAPI.Controllers;
+using DerbyCountyAPI.Dto;
 using DerbyCountyAPI.Interfaces;
 using DerbyCountyAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -132,6 +133,40 @@ namespace DerbyCountyAPI.Tests
             var notFoundResult = result as NotFoundResult;
 
             Assert.NotNull(notFoundResult);
+        }
+
+
+        [Fact]
+        public async void GetCurrentSeason_ReturnsOkAndString()
+        {
+            //Arrage
+
+            string season = "2023-24";
+
+
+            _matchResultService.Setup(service => service.GetCurrentSeason())
+                .ReturnsAsync(season);
+
+
+
+
+            //Act
+
+            var result = await _controller.GetCurrentSeason();
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+
+            var okResult = result as OkObjectResult;
+
+
+            StringDTO data = (StringDTO)okResult.Value;
+
+
+            Assert.NotNull(okResult);
+            Assert.Equal(season, data.Data);
         }
     }
 }
