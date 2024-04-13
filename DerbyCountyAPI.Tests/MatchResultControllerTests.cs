@@ -139,16 +139,12 @@ namespace DerbyCountyAPI.Tests
         [Fact]
         public async void GetCurrentSeason_ReturnsOkAndString()
         {
-            //Arrage
+            //Arrange
 
             string season = "2023-24";
 
-
             _matchResultService.Setup(service => service.GetCurrentSeason())
                 .ReturnsAsync(season);
-
-
-
 
             //Act
 
@@ -158,15 +154,47 @@ namespace DerbyCountyAPI.Tests
 
             Assert.IsType<OkObjectResult>(result);
 
-
             var okResult = result as OkObjectResult;
 
-
             StringDTO data = (StringDTO)okResult.Value;
-
 
             Assert.NotNull(okResult);
             Assert.Equal(season, data.Data);
         }
+
+        [Fact]
+        public async void GetSeasons_ReturnsOkAndStringList()
+        {
+            //Arrange
+
+            List<string?> seasons = new List<String>
+            {
+                "2023-24",
+                "2022-23",
+                "2021-22",
+                "2020-21"
+            };
+
+
+            _matchResultService.Setup(service => service.GetSeasonsPlayedIn())
+                .ReturnsAsync(seasons);
+
+
+            //Act
+
+            var result = await _controller.GetSeasons();
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(seasons, okResult.Value);
+
+        }
+
     }
 }
