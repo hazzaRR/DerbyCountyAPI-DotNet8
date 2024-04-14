@@ -2,6 +2,7 @@
 using DerbyCountyAPI.Dto;
 using DerbyCountyAPI.Interfaces;
 using DerbyCountyAPI.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -406,6 +407,90 @@ namespace DerbyCountyAPI.Tests
             Assert.NotNull(okResult);
 
             Assert.Equal(matches, okResult.Value);
+
+        }
+
+
+        [Fact]
+        public async void GetMatchesByPage_ReturnsBadRequest()
+        {
+
+            //Arrange
+
+            //Act
+
+
+            var result = await _controller.GetMatchesByPage(0, 0, null, null, null, null, null);
+
+            //Assert
+
+            Assert.IsType<BadRequestObjectResult>(result);
+
+
+            Assert.NotNull(result);
+
+
+        }
+
+        [Fact]
+        public async void GetMatchesByPage_PageNumberAndPageSizeLessThanOne_ReturnsBadRequest()
+        {
+
+            //Arrange
+
+            //Act
+
+            var result = await _controller.GetMatchesByPage(0, 0, null, null, null, null, null);
+
+            //Assert
+
+            Assert.IsType<BadRequestObjectResult>(result);
+
+
+            Assert.NotNull(result);
+
+
+        }
+
+        [Fact]
+        public async void GetMatchesByPage_PageNumberLessThanOne_ReturnsBadRequest()
+        {
+
+            //Arrange
+
+
+            //Act
+
+            var result = await _controller.GetMatchesByPage(-1, 2, null, null, null, null, null);
+
+            //Assert
+
+            Assert.IsType<BadRequestObjectResult>(result);
+
+
+            Assert.NotNull(result);
+
+
+        }
+
+        [Fact]
+        public async void GetMatchesByPage_PageSizeLessThanOne_ReturnsBadRequest()
+        {
+
+            //Arrange
+
+            //Act
+
+
+            var result = await _controller.GetMatchesByPage(2, -2, null, null, null, null, null);
+
+            //Assert
+
+            Assert.IsType<BadRequestObjectResult>(result);
+
+
+            Assert.NotNull(result);
+
 
         }
     }
