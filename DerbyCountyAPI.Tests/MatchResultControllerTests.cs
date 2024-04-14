@@ -246,5 +246,73 @@ namespace DerbyCountyAPI.Tests
 
         }
 
+        [Fact]
+        public async void GetLatestMatch_ReturnsOkAndMatchObject()
+        {
+            //Arrange
+
+            MatchResult match = new MatchResult
+            {
+                Id = 1,
+                HomeTeam = "Derby County",
+                AwayTeam = "Nottingham Forest",
+                HomeScore = 5,
+                AwayScore = 0,
+                Competition = "Champions League",
+                Season = "2023-24",
+                Result = "W",
+                Kickoff = new DateTime(2024, 12, 29),
+            };
+
+            _matchResultService.Setup(service => service.GetLatestMatchResult())
+                .ReturnsAsync(match);
+
+            //Act
+
+            var result = await _controller.GetLatestMatch();
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(match, okResult.Value);
+        }
+
+
+        [Fact]
+        public async void GetCompetitions_ReturnsOkAndListString()
+        {
+            //Arrange
+
+            List<string?> competitions = new List<string?>
+            {
+                "League 1",
+                "Championship",
+                "European Cup"
+            };
+
+            _matchResultService.Setup(service => service.GetCompetitionsPlayedIn(null, null))
+                .ReturnsAsync(competitions);
+
+
+            //Act
+
+            var result = await _controller.GetCompetitions(null, null);
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(competitions, okResult.Value);
+        }
     }
 }
