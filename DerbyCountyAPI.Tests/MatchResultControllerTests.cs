@@ -42,7 +42,7 @@ namespace DerbyCountyAPI.Tests
                     },
                                         new MatchResult
                     {
-                        Id = 1,
+                        Id = 2,
                         HomeTeam = "Derby County",
                         AwayTeam = "Ipswich Town",
                         HomeScore = 3,
@@ -313,6 +313,100 @@ namespace DerbyCountyAPI.Tests
             Assert.NotNull(okResult);
 
             Assert.Equal(competitions, okResult.Value);
+        }
+
+        [Fact]
+        public async void getTeamsPlayedAgainst_ReturnsOkAndListString()
+        {
+            //Arrange
+
+            List<string?> teams = new List<string?>
+            {
+                "Nottingham Forest",
+                "Leicester City",
+                "Burton Albion"
+            };
+
+
+            _matchResultService.Setup(service => service.GetTeamsPlayedAgainst(null, null))
+                .ReturnsAsync(teams);
+
+            //Act
+
+
+            var result = await _controller.GetTeamsPlayedAgainst(null, null);
+
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(teams, okResult.Value);
+
+        }
+
+
+        [Fact]
+
+        public async void GetMatchesUsingFind_ReturnsOkAndMatchResult()
+        {
+
+            //Arrange
+
+            List<MatchResult> matches = new List<MatchResult>
+                {
+                    new MatchResult
+                    {
+                        Id = 1,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Nottingham Forest",
+                        HomeScore = 5,
+                        AwayScore = 0,
+                        Competition = "Champions League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 12, 29),
+                    },
+                                        new MatchResult
+                    {
+                        Id = 2,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Ipswich Town",
+                        HomeScore = 3,
+                        AwayScore = 2,
+                        Competition = "Premier League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 03, 22),
+                    },
+
+                };
+
+
+            _matchResultService.Setup(service => service.GetMatchResultsByQuery(null, null, null, null, null))
+                .ReturnsAsync(matches);
+
+
+            //Act
+
+
+            var result = await _controller.GetMatches(null, null, null, null, null);
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+            var okResult = (OkObjectResult) result;
+
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(matches, okResult.Value);
+
         }
     }
 }
