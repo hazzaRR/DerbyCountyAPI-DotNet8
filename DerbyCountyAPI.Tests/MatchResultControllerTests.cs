@@ -5,6 +5,7 @@ using DerbyCountyAPI.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using System.Text;
 
 namespace DerbyCountyAPI.Tests
 {
@@ -560,6 +561,75 @@ namespace DerbyCountyAPI.Tests
             Assert.NotNull(okResult);
 
             Assert.Equal(data, okResult.Value);
+
+        }
+
+
+        [Fact]
+
+        public async void GetMatchesAsCSVFile_ReturnsFile()
+        {
+
+            //Arrange
+
+            List<MatchResult> matches = new List<MatchResult>
+                {
+                    new MatchResult
+                    {
+                        Id = 1,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Nottingham Forest",
+                        HomeScore = 5,
+                        AwayScore = 0,
+                        Competition = "Champions League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 12, 29),
+                    },
+                                        new MatchResult
+                    {
+                        Id = 2,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Ipswich Town",
+                        HomeScore = 3,
+                        AwayScore = 2,
+                        Competition = "Premier League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 03, 22),
+                    },
+
+                };
+
+
+            _matchResultService.Setup(service => service.GetMatchResultsByQuery(null, null, null, null, null))
+                .ReturnsAsync(matches);
+
+
+            var csvBuilder = new StringBuilder();
+            csvBuilder.AppendLine("MatchId,HomeTeam,AwayTeam,Kickoff,HomeScore,AwayScore,Result,PenaltiesScore,Season,Competition,Stadium");
+
+            foreach (var match in matches)
+            {
+                csvBuilder.AppendLine($"{match.Id},{match.HomeTeam},{match.AwayTeam},{match.Kickoff},{match.HomeScore},{match.AwayScore},{match.Result},{match.PenaltiesScore},{match.Season},{match.Competition},{match.Stadium}");
+            }
+
+            byte[] csvBytes = Encoding.UTF8.GetBytes(csvBuilder.ToString());
+
+            //Act
+
+            var result = await _controller.GetMatchesAsCsvFile(null, null, null, null, null);
+
+
+            //Assert
+
+            Assert.IsType<FileContentResult>(result);
+
+            var fileResponse = (FileContentResult) result;
+
+            Assert.NotNull(fileResponse);
+
+            Assert.Equal(csvBytes, fileResponse.FileContents);
 
         }
     }
