@@ -493,5 +493,74 @@ namespace DerbyCountyAPI.Tests
 
 
         }
+
+        [Fact]
+        public async void GetMatchesByPage__ReturnsOkAndPagedResponseDTO()
+        {
+
+            //Arrange
+
+            PagedResponseDTO<MatchResult> data = new PagedResponseDTO<MatchResult> (1, 3, 15,  new List<MatchResult>
+            {
+                    new MatchResult
+                    {
+                        Id = 1,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Nottingham Forest",
+                        HomeScore = 5,
+                        AwayScore = 0,
+                        Competition = "Champions League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 12, 29),
+                    },
+                    new MatchResult
+                    {
+                        Id = 2,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Ipswich Town",
+                        HomeScore = 3,
+                        AwayScore = 2,
+                        Competition = "Premier League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 03, 22),
+                    },
+                    new MatchResult
+                    {
+                        Id = 3,
+                        HomeTeam = "Derby County",
+                        AwayTeam = "Norwich CIty",
+                        HomeScore = 5,
+                        AwayScore = 4,
+                        Competition = "Premier League",
+                        Season = "2023-24",
+                        Result = "W",
+                        Kickoff = new DateTime(2024, 04, 21),
+                    }
+                }
+            );
+
+
+            _matchResultService.Setup(service => service.GetMatchResultsByQueryWithPagination(1, 3, null, null, null, null, null))
+                .ReturnsAsync(data);
+
+
+            //Act
+
+            var result = await _controller.GetMatchesByPage(1, 3, null, null, null, null, null);
+
+            //Assert
+
+            Assert.IsType<OkObjectResult>(result);
+
+
+            var okResult = (OkObjectResult)result;
+
+            Assert.NotNull(okResult);
+
+            Assert.Equal(data, okResult.Value);
+
+        }
     }
 }
