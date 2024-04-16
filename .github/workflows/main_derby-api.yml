@@ -63,4 +63,5 @@ jobs:
           app-name: 'derby-api'
           slot-name: 'Production'
           package: .
+          startup-command: 'dotnet DerbyCountyAPI.dll'
           
