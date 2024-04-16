@@ -9,7 +9,7 @@ using System;
 var allowedOrigins = "allowedOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
-var DbConnectionString = builder.Configuration["DbConnection"];
+var DbConnectionString = builder.Configuration.GetConnectionString("DbConnection");
 
 
 
@@ -23,7 +23,7 @@ builder.Services.AddCors(options =>
     policy =>
     {
         policy
-        .WithOrigins("http://localhost:3000")
+        .WithOrigins("http://localhost:3000", "https://derby-county.harryredman.com")
         .AllowAnyHeader()
         .AllowAnyMethod();
 
