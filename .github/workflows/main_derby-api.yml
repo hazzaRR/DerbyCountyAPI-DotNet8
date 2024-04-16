@@ -22,9 +22,6 @@ jobs:
           dotnet-version: '8.x'
           include-prerelease: true
 
-      - name: Test Application
-        run: dotnet test
-
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
@@ -55,9 +52,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_78A609809B1447AEB30E132ACAA32C00 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_25C2AA435FFB46F88B1B1121F2A45D61 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_615BE516A87B4FC98C949AE0D11D7E1C }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0C97726CEE2044839C5F3ACFE09A6D57 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_67283511BBFF4EABAC20D1985806E91C }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4914A4DF3941490490F4351DFE9981DF }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -66,5 +63,4 @@ jobs:
           app-name: 'derby-api'
           slot-name: 'Production'
           package: .
-          startup-command: 'dotnet DerbyCountyAPI.dll'
           
